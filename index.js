@@ -127,7 +127,13 @@ function morgan (format, options) {
       }
 
       debug('log request')
-      stream.write(line + '\n')
+
+      if (typeof opts.logFunction === 'function') {
+        opts.logFunction(line);
+      }
+      else {
+        stream.write(line + '\n')
+      }
     };
 
     if (immediate) {
